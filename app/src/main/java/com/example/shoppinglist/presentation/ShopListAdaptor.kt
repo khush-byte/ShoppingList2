@@ -45,7 +45,7 @@ class ShopListAdaptor : RecyclerView.Adapter<ShopListAdaptor.ShopItemViewHolder>
     override fun onBindViewHolder(viewHolder: ShopItemViewHolder, position: Int) {
         val shopItem = shopList[position]
         viewHolder.view.setOnClickListener {
-            true
+            //true
         }
         viewHolder.tvName.text = shopItem.name
         viewHolder.tvCount.text = shopItem.count.toString()
