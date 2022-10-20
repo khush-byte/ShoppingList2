@@ -43,7 +43,6 @@ class ShopListAdaptor : ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCa
         super.onViewRecycled(viewHolder)
         viewHolder.tvName.text = ""
         viewHolder.tvCount.text = ""
-        viewHolder.tvName.setTextColor(ContextCompat.getColor(viewHolder.view.context, android.R.color.white))
     }
 
     override fun getItemViewType(position: Int): Int {
