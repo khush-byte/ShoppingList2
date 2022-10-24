@@ -7,10 +7,22 @@
     android:background="@color/white"
     tools:context=".presentation.MainActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/shop_item_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rv_shop_list"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        tools:context=".presentation.ShopItemActivity"
+        tools:layout="@layout/fragment_shop_item" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="48dp"
         android:background="@drawable/background_main"
         android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,15 +48,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_shop_list"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="42dp"
         android:contentDescription="@string/app_name"
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_middle"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
@@ -54,8 +66,8 @@
         android:id="@+id/button_add_shop_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="12dp"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:focusable="true"
@@ -67,9 +79,16 @@
         app:fabCustomSize="67dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_middle"
         app:maxImageSize="33dp"
         app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="ImageContrastCheck" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
