@@ -1,8 +1,10 @@
 package com.example.shoppinglist.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 class ShopItemFragment : Fragment() {
     private lateinit var viewModel: ShopItemViewModel
+    private lateinit var onEditingFinishedListener: OnEditingFinishedListener
 
     private lateinit var tilName: TextInputLayout
     private lateinit var tilCount: TextInputLayout
@@ -26,8 +29,19 @@ class ShopItemFragment : Fragment() {
     private var screenMode: String = MODE_UNKNOWN
     private var shopItemId: Int = ShopItem.UNDEFINED_ID
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("ShopItemFragment", "onAttach")
+        if(context is OnEditingFinishedListener){
+            onEditingFinishedListener = context
+        }else{
+            throw RuntimeException("Activity must implement OnEditingFinishedListener")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("ShopItemFragment", "onCreate")
         parseParams()
     }
 
@@ -37,17 +51,53 @@ class ShopItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("ShopItemFragment", "onCreateView")
         return inflater.inflate(R.layout.fragment_shop_item, container, false)
     }
 
     //The view creation done
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("ShopItemFragment", "onViewCreated")
         viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews(view)
         addTextChangeListeners()
         launchRightMode()
         observeViewModel()
+    }
+    override fun onStart() {
+        super.onStart()
+        Log.d("ShopItemFragment", "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("ShopItemFragment", "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("ShopItemFragment", "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("ShopItemFragment", "onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("ShopItemFragment", "onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("ShopItemFragment", "onDestroy")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("ShopItemFragment", "onDetach")
     }
 
     private fun observeViewModel() {
@@ -69,8 +119,9 @@ class ShopItemFragment : Fragment() {
             tilName.error = message
         }
         viewModel.shouldCLoseScreen.observe(viewLifecycleOwner) {
-            activity?.onBackPressed()
+            //activity?.onBackPressed()
             //requireActivity().onBackPressed()
+            onEditingFinishedListener.onEditingFinished()
         }
     }
 
@@ -149,6 +200,10 @@ class ShopItemFragment : Fragment() {
         etName = view.findViewById(R.id.et_name)
         etCount = view.findViewById(R.id.et_count)
         buttonSave = view.findViewById(R.id.save_button)
+    }
+
+    interface OnEditingFinishedListener{
+        fun onEditingFinished()
     }
 
     companion object {
